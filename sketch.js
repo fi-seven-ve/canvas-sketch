@@ -209,7 +209,6 @@ var Sketcher = (function () {
 					}
 				}
 			}
-			console.log("sd: " + sd);
 			return sd;
 		},
 		createTextures: function createTextures() {
