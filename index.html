@@ -152,6 +152,8 @@ Base64 value:<Br>
 		sketcher.edgeBlurAmount = parseFloat(document.getElementById('edgeThickness').value);
 		sketcher.edgeAmount = parseFloat(document.getElementById('edgeAmount').value);
 		sketcher.progressUpdate(function (proportion, message) {
+			console.log((Math.round(proportion*1000)/10) + "% done - " + message);
+			document.title = (Math.round(proportion*1000)/10) + "% done - " + message;
 		});
 		var greyscale = !!document.getElementById("greyscale").checked;
 
