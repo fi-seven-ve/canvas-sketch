@@ -209,6 +209,7 @@ var Sketcher = (function () {
 					}
 				}
 			}
+			console.log("sd: " + sd);
 			return sd;
 		},
 		createTextures: function createTextures() {
@@ -281,7 +282,6 @@ var Sketcher = (function () {
 						imageDatas[ri][gi][bi] = canvas.getContext("2d").getImageData(0, 0, width, height);
 						return [ri, gi, bi].join(":");
 					});
-					console.log("functions size: " + thisSketcher.preparationFunctions.length);
 				})(ri, gi, bi, hue, saturation, thickness, length, minimum, colour, alpha, densityFactor);
 			}
 		},
