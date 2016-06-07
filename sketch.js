@@ -68,7 +68,9 @@ var Sketcher = (function () {
 			var width = canvas.width;
 			var height = canvas.height;
 			var imageData = context.getImageData(0, 0, width, height);
+			context = null;
 			var pixels = imageData.data;
+			imageData = null;
 
 			this.sendProgressUpdate(0, "Calculating required textures");
 			var pixelCodes = {};
@@ -148,9 +150,12 @@ var Sketcher = (function () {
 					pixels[index*4] = Math.round(rgb.red*edgeFactor);
 					pixels[index*4 + 1] = Math.round(rgb.green*edgeFactor);
 					pixels[index*4 + 2] = Math.round(rgb.blue*edgeFactor);
+					edgeFactor = null;
 				}
 			}
 			context.putImageData(imageData, 0, 0);
+			context = null;
+			imageData = null;
 		},
 		calculateStandardDeviation: function(inputRgb, blurAmount) {
 			var width = this.width;
@@ -209,7 +214,6 @@ var Sketcher = (function () {
 					}
 				}
 			}
-			console.log("sd: " + sd);
 			return sd;
 		},
 		createTextures: function createTextures() {
@@ -310,6 +314,7 @@ var Sketcher = (function () {
 							throw new Error("debug");
 						}
 						blendTotal += blend;
+						bend = null;
 					}
 				}
 			}
@@ -331,6 +336,7 @@ var Sketcher = (function () {
 						red += imageData.data[pixelIndex]*blend;
 						green += imageData.data[pixelIndex + 1]*blend;
 						blue += imageData.data[pixelIndex + 2]*blend;
+						imageData = null;
 					}
 				}
 			}
