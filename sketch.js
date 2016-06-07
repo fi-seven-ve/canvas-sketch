@@ -68,9 +68,7 @@ var Sketcher = (function () {
 			var width = canvas.width;
 			var height = canvas.height;
 			var imageData = context.getImageData(0, 0, width, height);
-			context = null;
 			var pixels = imageData.data;
-			imageData = null;
 
 			this.sendProgressUpdate(0, "Calculating required textures");
 			var pixelCodes = {};
@@ -110,16 +108,11 @@ var Sketcher = (function () {
 			}
 			var thisSketcher = this;
 			this.whenReady(function () {
-				thisSketcher.transformCanvasInner(canvas, greyscale);
+				thisSketcher.transformCanvasInner(width, height, pixels, context, imageData, greyscale);
 			});
 			return this;
 		},
-		transformCanvasInner: function transformCanvasInner(canvas, greyscale) {
-			var context = canvas.getContext("2d");
-			var width = canvas.width;
-			var height = canvas.height;
-			var imageData = context.getImageData(0, 0, width, height);
-			var pixels = imageData.data;
+		transformCanvasInner: function transformCanvasInner(width, height, pixels, context, imageData, greyscale) {
 
 			var edges = [];
 			for (var x = 0; x < width; x++) {
@@ -150,12 +143,9 @@ var Sketcher = (function () {
 					pixels[index*4] = Math.round(rgb.red*edgeFactor);
 					pixels[index*4 + 1] = Math.round(rgb.green*edgeFactor);
 					pixels[index*4 + 2] = Math.round(rgb.blue*edgeFactor);
-					edgeFactor = null;
 				}
 			}
 			context.putImageData(imageData, 0, 0);
-			context = null;
-			imageData = null;
 		},
 		calculateStandardDeviation: function(inputRgb, blurAmount) {
 			var width = this.width;
@@ -314,7 +304,6 @@ var Sketcher = (function () {
 							throw new Error("debug");
 						}
 						blendTotal += blend;
-						bend = null;
 					}
 				}
 			}
@@ -336,7 +325,6 @@ var Sketcher = (function () {
 						red += imageData.data[pixelIndex]*blend;
 						green += imageData.data[pixelIndex + 1]*blend;
 						blue += imageData.data[pixelIndex + 2]*blend;
-						imageData = null;
 					}
 				}
 			}
